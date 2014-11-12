@@ -17,6 +17,7 @@ void data_converter::OpenFile(string file)
 		FileIsOpen = false;
 	}
 	
+	//Open file and check if it's good
 }
 
 void data_converter::convertData()
@@ -35,11 +36,15 @@ void data_converter::convertData()
 
 	}
 
+	// Get old date from file and convert it to new date
+	
 }
 
 void data_converter::GetSingleLine()
 {
 	getline(data_file, singleline);
+
+	//Get single line from dates.txt
 }
 
 void data_converter::LookForSymbol()
@@ -56,6 +61,18 @@ void data_converter::LookForSymbol()
 			continue;
 		}
 	}
+
+	//Each date have certain symbol. Search for each symbol and determine type of the date.
+	/*
+	Types:
+	yyyy-mm-dd
+	dd*mm*yyyy
+	mm#yy#dd
+	mm/dd/yy
+
+	(month word) dd, yy
+	(month word) dd, yyyy
+	*/
 }
 
 void data_converter::Convert()
@@ -82,7 +99,7 @@ void data_converter::Convert()
 			month = singleline.substr(0,2);
 			year = singleline.substr(3,2);
 
-			if (atoi(year.c_str()) > 50)
+			if (atoi(year.c_str()) > 50) //Convert year from two digits to four digits (1950-2049)
 			{
 				year = "19" + year;
 			}
@@ -98,7 +115,7 @@ void data_converter::Convert()
 			month = singleline.substr(0,2);
 			year = singleline.substr(6,2);
 
-			if (atoi(year.c_str()) > 50)
+			if (atoi(year.c_str()) > 50) //Convert year from two digits to four digits (1950-2049)
 			{
 				year = "19" + year;
 			}
@@ -118,7 +135,7 @@ void data_converter::Convert()
 				MonthToNumber();
 				year = singleline.substr(8,2);
 
-				if (atoi(year.c_str()) > 50)
+				if (atoi(year.c_str()) > 50) //Convert year from two digits to four digits (1950-2049)
 				{
 					year = "19" + year;
 				}
@@ -145,7 +162,7 @@ void data_converter::Convert()
 		}
 
 	}
-
+	//Convert each type of date to day, month, year
 }
 
 void data_converter::MonthToNumber()
@@ -163,6 +180,8 @@ void data_converter::MonthToNumber()
 	else if (month == "Oct") month = "10";
 	else if (month == "Nov") month = "11";
 	else month = "12";
+
+	//If month is not a number, convert it to number
 	
 }
 
@@ -170,6 +189,8 @@ void data_converter::CreateNewDate()
 {
 	newline = year + '-' + month + '-' + day;
 	data_new.push_back(newline);
+
+	//Create new date in ISO 8601 standard, year-month-day
 }
 
 void data_converter::showDataInConsole()
@@ -178,6 +199,8 @@ void data_converter::showDataInConsole()
 	{
 	cout << data_new[i] << endl;
 	}
+
+	//Show all converted dates in console
 }
 
 void data_converter::saveDataToFile()
@@ -188,6 +211,8 @@ void data_converter::saveDataToFile()
 		new_file << data_new[i] << endl;
 	}
 	new_file.close();
+
+	//Save all converted date to File 
 
 }
 
